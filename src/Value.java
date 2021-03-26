@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public class Value {
+public class Value {
+
 }

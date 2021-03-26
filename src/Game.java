@@ -1,5 +1,6 @@
 import javax.naming.LinkLoopException;
 import java.util.LinkedList;
+import java.util.*;
 
 public class Game {
     LinkedList<Card> deck = new LinkedList<Card>();
@@ -27,14 +28,16 @@ public class Game {
     public static void give_cards(Game a){
         LinkedList<Card> deck = a.deck;
         LinkedList<Player> playerList = a.playerList;
+//        System.out.print(playerList.size());
 
 
         for (int i = 0; i < playerList.size(); i++){
             for (int j = 0; j < 2; j++ ){
+//                System.out.println(i);
                 int size = deck.size() -1 ;
                 int random_int = (int)(Math.random() * (size + 1));
                 Card temp_card  = deck.get(random_int);
-                playerList.get(random_int).hand.add(temp_card);
+                playerList.get(i).hand.add(temp_card);
                 deck.remove(random_int);
                 }
         }
@@ -78,7 +81,7 @@ public class Game {
 
     public static String deckString(LinkedList<Card> deck){
         String s_deck = " ";
-        for (int i = 0; i < deck.size()-1 ; i++ ){
+        for (int i = 0; i < deck.size() ; i++ ){
             s_deck += "\n" + Card.to_String(deck.get(i));
 
         }
@@ -88,17 +91,55 @@ public class Game {
 
     }
 
-    public static void create_player(){
+    public void create_playerList(){
+        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
+        System.out.print("how many players");
+        int numplayers = sc.nextInt();
+
+
+        for (int i = 0; i < numplayers; i++){
+//            System.out.println(i);
+            Scanner sc1= new Scanner(System.in);
+            int num = i+1;
+            System.out.println("Player" + num + " what is your name?");
+            String name = sc1.nextLine();
+
+            System.out.println( name +" what is your buy in amount?");
+            int money = sc1.nextInt();
+
+            Player newPlayer = new Player(money, name);
+            this.playerList.add(newPlayer);
+        }
+
 
     }
 
 
 
     public static void main(String[] args){
+//        Player p1 = new Player(100, "poo");
+//        Player p2 = new Player(100, "pee");
+//        Player p3 = new Player(100, "poop");
+//        LinkedList<Player> plist = new LinkedList<Player>();
+//        plist.add(p1);
+//        plist.add(p2);
+//        plist.add(p3);
+
+
         Game newGame = new Game();
+//        newGame.playerList = plist;
+        newGame.create_playerList();
         give_cards(newGame);
-        LinkedList p = newGame.playerList.get(0).hand;
-        deckString(p);
+        System.out.print(deckString(newGame.playerList.get(0).hand));
+        System.out.print(deckString(newGame.playerList.get(1).hand));
+        System.out.print(deckString(newGame.deck));
+
+
+
+
+
+
+
 
     }
 

@@ -5,7 +5,10 @@ public class Player {
     int money = 1000;
     String Name = "Player Unknown";
     int roundBet = 0;
-    public Player(){
+    public Player(int guap, String name){
+        money = guap;
+        Name = name;
+
 
     }
 

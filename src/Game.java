@@ -126,13 +126,12 @@ public class Game {
 //        Happens only at the start when initializing the game
 //        game setup ( make player lists, give players cards)
 //        usage  -(create game object and call main_GameLoop on said object)
+//        blind is set by the user as well
         this.create_playerList();
         this.give_cards();
+        this.setBlind();
         Boolean Gameover = false;
 // Initialize variables from game
-
-//        Happens only at the start when initializing the game
-
 //        Initialize pointers
         int bigBlindPointer = this.playerList.size()-1;
         int smallBlindPointer = this.playerList.size()-2 ;
@@ -140,6 +139,7 @@ public class Game {
 
 
 //        turn, bbp and sbp are all
+//        this needs to happen after every round is finished and someone has won the round
         this.playerList.get(bigBlindPointer).bigblind = true;
         this.playerList.get(smallBlindPointer).smallblind = true;
         this.playerList.get(turn).turn = true;
@@ -156,9 +156,14 @@ public class Game {
             iterate(this.playerList, turn);
             int tempTurn = turn;
             this.turnCounter = 0;
+//             the appropriate players receive the bbp sbp and turn pointers
+
+            this.playerList.get(bigBlindPointer).bigblind = true;
+            this.playerList.get(smallBlindPointer).smallblind = true;
+            this.playerList.get(turn).turn = true;
 //        Round begins
 //        All players should have cards at this point
-//        Set up pointers
+
 
 //            Loops through Player list and changes all the players and removes money from their balance and adds it to the pool.
 
@@ -216,6 +221,10 @@ public class Game {
                 turn(this);
             }else if (this.turnCounter ==4){
                 this.compareHands();
+
+                this.playerList.get(bigBlindPointer).bigblind = true;
+                this.playerList.get(smallBlindPointer).smallblind = true;
+                this.playerList.get(turn).turn = true;
             }
         }
 

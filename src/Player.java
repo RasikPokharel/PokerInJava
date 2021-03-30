@@ -8,7 +8,7 @@ public class Player {
     boolean bigblind = false;
     boolean smallblind = false;
     boolean turn = false;
-    boolean folded = true;
+    boolean folded = false;
 
     public Player(int guap, String name){
         money = guap;

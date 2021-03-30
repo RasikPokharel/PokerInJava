@@ -133,9 +133,10 @@ public class Game {
         Boolean Gameover = false;
 // Initialize variables from game
 //        Initialize pointers
-        int bigBlindPointer = this.playerList.size()-1;
-        int smallBlindPointer = this.playerList.size()-2 ;
-        int turn = this.playerList.size();
+        int bigBlindPointer = this.playerList.size()-2;
+        int smallBlindPointer = this.playerList.size()-3 ;
+        int turn = this.playerList.size()-1;
+        System.out.println("1");
 
 
 //        turn, bbp and sbp are all
@@ -143,11 +144,13 @@ public class Game {
         this.playerList.get(bigBlindPointer).bigblind = true;
         this.playerList.get(smallBlindPointer).smallblind = true;
         this.playerList.get(turn).turn = true;
+        System.out.println("2");
 
 //       This is the round loop
 //       Runs the entire time when someone hasn't yet won the hand
 //        This has to take care of
-        while(! Gameover);{
+        while(Gameover == false){
+            System.out.println("3");
 
 //            iterate pointers and assign temp pointer to the player whose turn it is in this round of play the big blind small blind and turn pointers all move one space
 //            set turn counter to zero at the start of every round
@@ -165,25 +168,27 @@ public class Game {
 //        All players should have cards at this point
 
 
-//            Loops through Player list and changes all the players and removes money from their balance and adds it to the pool.
+//       Loops through Player list and changes all the players and removes money from their balance and adds it to the pool.
 
-// If the player has big blind is true money is removed from their balance and put into the game balance
-//            blinds are set to false for the next round
-//            each players round bets are adjusted accordingly (round bets is how much money they have put in each round a round is a round of betting)
+//          If the player has big blind is true money is removed from their balance and put into the game balance
+//          blinds are set to false for the next round
+//          each players round bets are adjusted accordingly (round bets is how much money they have put in each round a round is a round of betting)
 
             for (int i = 0; i < this.playerList.size()-1; i++) {
                 Player player = this.playerList.get(i);
-                if (player.bigblind == true & player.turn == false) {
+                if (player.bigblind == true ) {
                     player.money -= minBlind;
                     this.pool += minBlind;
                     player.bigblind = false;
                     player.roundBet = minBlind;
+                    System.out.println("4");
 
-                } else if (player.smallblind == true & player.turn == false) {
+                } else if (player.smallblind == true ) {
                     player.money -= minBlind / 2;
                     this.pool += minBlind / 2;
                     player.smallblind = false;
                     player.roundBet = minBlind / 2;
+                    System.out.println("5");
 
                 }
 
@@ -193,15 +198,24 @@ public class Game {
             }
 //            runs for every betting round when the bets are not equal for every player
             while (turn != -1){
+
+
+
                 if (checkRoundBets()==true){
                     turn = -1;
                     this.turnCounter += 1;
                     this.to_call = 0;
+                    System.out.println("6");
                 }else if (this.playerList.get(turn).turn == true & this.playerList.get(turn).folded == true){
                     iterate(this.playerList, turn);
+                    this.playerList.get(turn).turn = true;
+                    System.out.println("7");
                 }else if (this.playerList.get(turn).turn == true & this.playerList.get(turn).folded == false){
                     this.playTurn(playerList.get(turn));
                     iterate(this.playerList, turn);
+                    this.playerList.get(turn).turn = true;
+                    System.out.println("8");
+
                 }else if(checkRoundBets()==true){
 
                 }
@@ -248,16 +262,18 @@ public class Game {
         LinkedList plist =this.playerList;
         int roundbet = -1;
         for (Player p: playerList){
-
+// first iteration changes the round bet from -1 to first players round bet
             if (roundbet == -1){
                 roundbet = p.roundBet;
             }
+//            Second iteration and on checks if roundbet is the same as previously recorded roundbet if yes does nothing and if false returns false.
             if (roundbet == p.roundBet){
+                roundbet = p.roundBet;
 
             }else{
                 return false;
             }
-            return true;
+
 
 
         }
@@ -265,6 +281,22 @@ public class Game {
     }
     public void playTurn(Player unknown){
         this.display(unknown);
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        if (input == "Call"){
+            call(unknown);
+
+        }else if(input == "Raise") {
+            System.out.println("How much?");
+            Scanner sc1 = new Scanner(System.in);
+            int amt = sc1.nextInt();
+            raise(unknown, amt);
+        }else if(input == "Fold");
+            fold(unknown);
+
+
+
+
 //        take inputs for raise, call or fold
 
 
@@ -308,28 +340,14 @@ public class Game {
 
 
     public static void main(String[] args){
-//        Player p1 = new Player(100, "poo");
-//        Player p2 = new Player(100, "pee");
-//        Player p3 = new Player(100, "poop");
-//        LinkedList<Player> plist = new LinkedList<Player>();
-//        plist.add(p1);
-//        plist.add(p2);
-//        plist.add(p3);
-
-
-//        Game newGame = new Game();
-////        newGame.playerList = plist;
-//        newGame.create_playerList();
-//        newGame.setBlind();
-//        give_cards(newGame);
-//        System.out.print(deckString(newGame.playerList.get(0).hand));
-//        System.out.print(deckString(newGame.deck));
-//        LinkedList<Integer> a = new LinkedList<Integer>();
-//        iterate()
+    Game newgame = new Game();
+    newgame.main_GameLoop();
 
 
 
-
+// NOTES: Iterator creation isn't quite working properly
+//        Checking Round bets is not working as intended
+//
 
 
 

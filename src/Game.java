@@ -201,7 +201,7 @@ public class Game {
 
 
 
-                if (checkRoundBets()==true){
+                if (checkRoundBets()==true & turn == tempTurn){
                     turn = -1;
                     this.turnCounter += 1;
                     this.to_call = 0;
@@ -216,9 +216,9 @@ public class Game {
                     this.playerList.get(turn).turn = true;
                     System.out.println("8");
 
-                }else if(checkRoundBets()==true){
-
                 }
+
+
 
 
 //          runs after each betting round has been completed and all remaining players have put in the same amount of money
@@ -245,6 +245,19 @@ public class Game {
 
 
     }
+
+    private Boolean isStraight(LinkedList<Card> list){
+        
+
+    }
+
+
+
+    public Player compareHands(){
+        LinkedList<Player> plist = this.playerList;
+        LinkedList<Card> tcards = this.tableCards;
+
+    }
 //    displays everything nessesary per turn and is called when a player has a turn on the game and the player
     public void display(Player unknown){
         System.out.println("This is your hand"+deckString(unknown.hand));
@@ -253,24 +266,20 @@ public class Game {
         System.out.println("Player" + unknown.Name + "It is now your turn what will you do");
         System.out.println("Your options are call(" + (this.to_call- unknown.roundBet) +") Raise or Fold");
     }
-    public Player compareHands(){
 
-        return this.playerList.get(0);
-    }
 //    checks the state variables of the game and outputs true if all the players have bet the same amount in a round
     public boolean checkRoundBets(){
         LinkedList plist =this.playerList;
         int roundbet = -1;
         for (Player p: playerList){
+            System.out.println(p.Name);
 // first iteration changes the round bet from -1 to first players round bet
             if (roundbet == -1){
                 roundbet = p.roundBet;
+
             }
 //            Second iteration and on checks if roundbet is the same as previously recorded roundbet if yes does nothing and if false returns false.
-            if (roundbet == p.roundBet){
-                roundbet = p.roundBet;
-
-            }else{
+            if (roundbet != p.roundBet) {
                 return false;
             }
 

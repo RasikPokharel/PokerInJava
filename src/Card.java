@@ -1,53 +1,44 @@
 import java.util.LinkedList;
 
+
 public class Card {
-    String suit;
-    int value;
-    public Card(int val, String type){
-
-
-        if (type == "Heart" || type == "heart" || type == "Hearts" || type == "hearts" ) {
-            suit = "♥";
-        }else if(type == "Club" || type == "club" || type == "Clubs" || type == "clubs"){
-            suit = "♣";
-        }else if(type == "Diamond" || type == "diamond" || type == "Diamonds" || type == "diamonds"){
-            suit = "♦";
-
-        }else if(type == "Spade"|| type == "spade" || type == "Spades" || type == "Spades" ){
-            suit = "♠";
-        }else{
-
-        }
-
-
-
-
-        value = val;
-
+    public enum Suit {
+        HEART, CLUB, DIAMOND, SPADE
     }
-    public static String to_String(Card c){
-        String val = "poop";
-        if (c.value <= 1){
-            val = "A ";
 
-        }else if (c.value < 10) {
-            val = " " + String.valueOf(c.value);
-        }else if (c.value == 10){
-            val = String.valueOf(c.value);
-        }else if (c.value == 11){
-            val = "J ";
-        }else if (c.value == 12){
-            val = "Q ";
-        }else {
-            val = "K ";
-        }
+    private final int value;
+    private final Suit suit;
 
+    public Card(int value, Suit suit){
+        this.value = value;
+        this.suit = suit;
+    }
 
+    private String getSuitString() {
+        return switch (this.suit) {
+            case HEART -> "♥";
+            case CLUB -> "♣";
+            case DIAMOND -> "♦";
+            case SPADE -> "♠";
+        };
+    }
 
+    private String getValueString() {
+        return switch (this.value) {
+            case 1 -> "A ";
+            case 10 -> "10";
+            case 11 -> "J ";
+            case 12 -> "Q ";
+            case 13 -> "K ";
+            default -> this.value + " ";
+        };
+    }
 
+    public String toString(){
+        String valString = this.getValueString();
+        String suitString = this.getSuitString();
 
-
-        String card1 = " -------------\n" +
+        String cardTemplate = " -------------\n" +
                 "|%s%s          | \n" +
                 "|   -------   | \n" +
                 "|  |       |  | \n" +
@@ -58,45 +49,37 @@ public class Card {
                 "|   -------   | \n" +
                 "|          %s%s| \n" +
                 " -------------  ";
-        String card  = String.format(card1, val,c.suit, c.suit,val,c.suit);
-        return card;
 
-
-
+        return String.format(cardTemplate, valString, suitString, suitString, valString, suitString);
     }
 
 
     public static void main(String[] args){
-//        Card Ace_of_Spades = new Card(12, "♠");
-////        System.out.println(Ace_of_Spades.value);
-////        System.out.println(to_String(Ace_of_Spades));
-//        Card King_of_Spades = new Card(13,"♠");
+//        Card Ace_of_Spades = new Card(1, Suit.SPADE);
+//        System.out.println(Ace_of_Spades.toString());
+//        System.out.println((Ace_of_Spades.toString()));
+//        Card King_of_Spades = new Card(13,Suit.SPADE);
 //
 //        LinkedList<Card> list = new LinkedList<Card>();
-////        System.out.print(list);
+//        System.out.print(list);
 //        list.add(Ace_of_Spades);
-////        System.out.print(list);
+//        System.out.print(list);
 //        list.add(King_of_Spades);
-
-//        System.out.print(to_String(list.get(1)));
-        LinkedList<Integer> list = new LinkedList<Integer>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        list.add(7);
-        list.add(8);
-        list.add(9);
-        System.out.println(list.listIterator(0).nextIndex());
-        System.out.println(list.get(-1));
-
-
-
-
-
-
+//
+//        System.out.print(list.get(1).toString());
+//        LinkedList<Integer> list = new LinkedList<Integer>();
+//        list.add(1);
+//        list.add(2);
+//        list.add(3);
+//        list.add(4);
+//        list.add(5);
+//        list.add(6);
+//        list.add(7);
+//        list.add(8);
+//        list.add(9);
+//        System.out.println(list.listIterator(0).nextIndex());
+//        System.out.println(list.get(-1));
 
     }
 }
+

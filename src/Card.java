@@ -1,10 +1,8 @@
 import java.util.LinkedList;
 
 
+enum Suit { HEART, CLUB, DIAMOND, SPADE }
 public class Card {
-    public enum Suit {
-        HEART, CLUB, DIAMOND, SPADE
-    }
 
     private final int value;
     private final Suit suit;
@@ -12,6 +10,14 @@ public class Card {
     public Card(int value, Suit suit){
         this.value = value;
         this.suit = suit;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    public Suit getSuit() {
+        return this.suit;
     }
 
     private String getSuitString() {
@@ -37,7 +43,6 @@ public class Card {
     public String toString(){
         String valString = this.getValueString();
         String suitString = this.getSuitString();
-
         String cardTemplate = " -------------\n" +
                 "|%s%s          | \n" +
                 "|   -------   | \n" +

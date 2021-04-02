@@ -15,19 +15,14 @@ public class Game {
 
     public Game(){
 //        Creates a non randomized deck
-        LinkedList<String> suits = new LinkedList<String>();
-        suits.add("Hearts");
-        suits.add("Spades");
-        suits.add("Diamonds");
-        suits.add("Clubs");
+        Suit[] suits = {Suit.HEART, Suit.SPADE, Suit.CLUB, Suit.DIAMOND};
+
         for (int i = 1; i < 14; i++) {
             for (int j = 0; j < 4; j++) {
-                Card tempCard = new Card(i, suits.get(j));
+                Card tempCard = new Card(i, suits[j]);
                 deck.add(tempCard);
-
             }
         }
-
 
     }
     public void give_cards(){
@@ -83,13 +78,10 @@ public class Game {
     public static String deckString(LinkedList<Card> deck){
         String s_deck = " ";
         for (int i = 0; i < deck.size() ; i++ ){
-            s_deck += "\n" + Card.to_String(deck.get(i));
+            s_deck += "\n" + deck.get(i).toString();
 
         }
         return s_deck;
-
-
-
     }
 
     public void create_playerList(){

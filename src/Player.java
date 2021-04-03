@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Player {
-    LinkedList<Card> hand = new LinkedList<Card>();
+    private ArrayList<Card> hand = new ArrayList<Card>();
     int money = 1000;
     String Name = "Player Unknown";
     int roundBet = 0;
@@ -13,8 +14,13 @@ public class Player {
     public Player(int guap, String name){
         money = guap;
         Name = name;
-
-
     }
 
+    public void addCard(Card card) {
+        this.hand.add(card);
+    }
+
+    public ArrayList<Card> getHand() {
+        return this.hand;
+    }
 }

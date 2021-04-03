@@ -3,76 +3,78 @@ import java.util.LinkedList;
 import java.util.*;
 
 public class Game {
-    LinkedList<Card> deck = new LinkedList<Card>();
-    LinkedList<Player> playerList = new LinkedList<Player>();
-    LinkedList<Card> tableCards = new LinkedList<Card>();
-    int minBlind = 0;
+
+    private Deck deck;
+    private LinkedList<Player> playerList = new LinkedList<>();
+    private ArrayList<Card> tableCards = new ArrayList<>();
+    private int smallBlind;
+    private int bigBlind;
     int pool = 0;
-    int to_call = minBlind;
+    int to_call = smallBlind;
     int turnCounter = 0;
 
+    public Game(int smallBlind, int bigBlind, LinkedList<Player> playerList){
+        deck = new Deck();
+        this.smallBlind = smallBlind;
+        this.bigBlind = bigBlind;
+        this.addPlayers(playerList);
+    }
 
-
-    public Game(){
-//        Creates a non randomized deck
-        Suit[] suits = {Suit.HEART, Suit.SPADE, Suit.CLUB, Suit.DIAMOND};
-
-        for (int i = 1; i < 14; i++) {
-            for (int j = 0; j < 4; j++) {
-                Card tempCard = new Card(i, suits[j]);
-                deck.add(tempCard);
+    public void dealCards(){
+        for (Player player: playerList) {
+            for (int i = 0; i < 2; i++) {
+                player.addCard(deck.pop());
             }
         }
-
     }
-    public void give_cards(){
 
-//        System.out.print(playerList.size());
-
-
-        for (int i = 0; i < this.playerList.size(); i++){
-            for (int j = 0; j < 2; j++ ){
-//                System.out.println(i);
-                int size = this.deck.size() -1 ;
-                int random_int = (int)(Math.random() * (size + 1));
-                Card temp_card  = this.deck.get(random_int);
-                this.playerList.get(i).hand.add(temp_card);
-                this.deck.remove(random_int);
-                }
+    public void flop(){
+        for (int j = 0; j < 3; j++ ) {
+            this.tableCards.add(this.deck.pop());
         }
     }
 
-    public static void flop(Game a){
-        LinkedList<Card> deck = a.deck;
-        LinkedList<Card> table = a.tableCards;
-        for (int j = 0; j < 3; j++ ){
-            int size = deck.size() -1 ;
-            int random_int = (int)(Math.random() * (size + 1));
-            Card temp_card  = deck.get(random_int);
-            table.add(temp_card);
-            deck.remove(random_int);
+    public void river() {
+        this.tableCards.add(this.deck.pop());
+    }
+
+    public void turn() {
+        this.tableCards.add(this.deck.pop());
+    }
+
+    public void addPlayer (Player player) {
+        this.playerList.add(player);
+    }
+
+    public void addPlayers(LinkedList<Player> players){
+        for (Player player: players) {
+            this.playerList.add(player);
         }
 
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("how many players");
+//        int numOfPlayers = sc.nextInt();
+//
+//        for (int i = 0; i < numOfPlayers; i++){
+//            System.out.println("Player " + (i + 1) + " what is your name?");
+//            String name = sc.nextLine();
+//
+//            System.out.println(name +" what is your buy in amount?");
+//            int money = sc.nextInt();
+//
+//            this.playerList.add(new Player(money, name));
+//        }
+//        System.out.println("=== Players are added ===");
     }
-    public static void river(Game a){
-        LinkedList<Card> deck = a.deck;
-        LinkedList<Card> table = a.tableCards;
-        int size = deck.size() -1 ;
-        int random_int = (int)(Math.random() * (size + 1));
-        Card temp_card  = deck.get(random_int);
-        table.add(temp_card);
-        deck.remove(random_int);
 
-    }
-    public static void turn(Game a){
-        LinkedList<Card> deck = a.deck;
-        LinkedList<Card> table = a.tableCards;
-        int size = deck.size() -1 ;
-        int random_int = (int)(Math.random() * (size + 1));
-        Card temp_card  = deck.get(random_int);
-        table.add(temp_card);
-        deck.remove(random_int);
+    public void setBlind(int smallBlind, int bigBlind){
+        this.smallBlind = smallBlind;
+        this.bigBlind = bigBlind;
 
+//        Scanner sc= new Scanner(System.in);
+//        System.out.print("What big blind would you like to start with");
+//        int bigblind = sc.nextInt();
+//        bigblind = this.minBlind;
     }
 
     public static String deckString(LinkedList<Card> deck){
@@ -83,36 +85,6 @@ public class Game {
         }
         return s_deck;
     }
-
-    public void create_playerList(){
-        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("how many players");
-        int numplayers = sc.nextInt();
-
-
-        for (int i = 0; i < numplayers; i++){
-//            System.out.println(i);
-            Scanner sc1= new Scanner(System.in);
-            int num = i+1;
-            System.out.println("Player" + num + " what is your name?");
-            String name = sc1.nextLine();
-
-            System.out.println( name +" what is your buy in amount?");
-            int money = sc1.nextInt();
-
-            Player newPlayer = new Player(money, name);
-            this.playerList.add(newPlayer);
-        }
-
-
-    }
-    public void setBlind(){
-        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("What big blind would you like to start with");
-        int bigblind = sc.nextInt();
-        bigblind = this.minBlind;
-    }
-
 
     public void main_GameLoop(){
 //        Happens only at the start when initializing the game
@@ -341,8 +313,8 @@ public class Game {
 
 
     public static void main(String[] args){
-    Game newgame = new Game();
-    newgame.main_GameLoop();
+        Game newgame = new Game();
+        newgame.main_GameLoop();
 
 
 

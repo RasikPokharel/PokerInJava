@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class Player {
     private ArrayList<Card> hand = new ArrayList<Card>();
-    int money = 1000;
+    int money;
     String Name = "Player Unknown";
     int roundBet = 0;
     boolean bigblind = false;
@@ -18,6 +18,15 @@ public class Player {
 
     public void addCard(Card card) {
         this.hand.add(card);
+    }
+    public void printHand() {
+        System.out.println();
+        System.out.println(this.Name + "'s Hand");
+        System.out.println("====================");
+        for (Card card: this.hand) {
+            System.out.print(card.getValue() + " " + card.getSuit() + " | ");
+        }
+        System.out.println();
     }
 
     public ArrayList<Card> getHand() {
